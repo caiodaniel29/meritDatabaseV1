@@ -11,7 +11,7 @@ Notes:
 - Need to work on Query2 (line 18):
     figure out how to pull specific information from monday.com
 - Need to confirgure the information being entered on PostgreSQL (line 45)
-    data is ebing inserted to the table on that line, make sure the right info is going in.
+    data is being inserted to the table on that line, make sure the right info is going in.
 
 '''
 
