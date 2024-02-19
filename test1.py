@@ -2,6 +2,9 @@ import requests
 import psycopg2
 import json
 
+# Author: Caio M. Sanchez
+# 02/19/2024
+
 ''' 
 Notes:
 - Created a reporsitory for this project on GitHub
@@ -40,13 +43,13 @@ def insert_data_into_postgresql(data):
         )
         cursor = connection.cursor()
         
-        # Example: Insert data into a 'projects' table
+        # Insert data into a 'projects' table
         for item in data:
             # Extract specific values from item and assign them to variables
-            project_name = item.get('project_name')  # Replace 'project_name' with the actual property name
-            project_name_full = item.get('project_name_full')  # Replace 'project_name_full' with the actual property name
-            customer_name = item.get('customer_name')  # Replace 'customer_name' with the actual property name
-            notes = item.get('notes')  # Replace 'notes' with the actual property name
+            project_name = item.get('project_name')  
+            project_name_full = item.get('project_name_full')  
+            customer_name = item.get('customer_name')  
+            notes = item.get('notes')  
             
             # Execute the SQL INSERT statement with the extracted values
             cursor.execute("INSERT INTO projects (project_name, project_name_full, customer_name, notes) VALUES (%s, %s, %s, %s)", (project_name, project_name_full, customer_name, notes))
