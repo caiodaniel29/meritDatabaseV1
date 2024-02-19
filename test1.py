@@ -65,7 +65,7 @@ def insert_data_into_postgresql(data):
             connection.close()
             print("PostgreSQL connection is closed.")
         else: 
-            print("No connectrion available.")
+            print("No connection available.")
 
 # Function to send data to another destination (Another API, engineers team...)
 def send_data_to_another_destination(data):
