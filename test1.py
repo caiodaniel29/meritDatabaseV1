@@ -4,10 +4,11 @@ import json
 
 ''' 
 Notes:
-- Creating a reporsitory for this project on GitHub
-- 
-
-
+- Created a reporsitory for this project on GitHub
+- Need to work on Query2 (line 18):
+    figure out how to pull specific information from monday.com
+- Need to confirgure the information being entered on PostgreSQL (line 45)
+    data is ebing inserted to the table on that line, make sure the right info is going in.
 
 '''
 
@@ -41,7 +42,14 @@ def insert_data_into_postgresql(data):
         
         # Example: Insert data into a 'projects' table
         for item in data:
-            cursor.execute("INSERT INTO projects (project_name, project_name_full, customer_name, notes) VALUES (%s, %s, ...)", (item['value1'], item['value2'], ...))
+            # Extract specific values from item and assign them to variables
+            project_name = item.get('project_name')  # Replace 'project_name' with the actual property name
+            project_name_full = item.get('project_name_full')  # Replace 'project_name_full' with the actual property name
+            customer_name = item.get('customer_name')  # Replace 'customer_name' with the actual property name
+            notes = item.get('notes')  # Replace 'notes' with the actual property name
+            
+            # Execute the SQL INSERT statement with the extracted values
+            cursor.execute("INSERT INTO projects (project_name, project_name_full, customer_name, notes) VALUES (%s, %s, %s, %s)", (project_name, project_name_full, customer_name, notes))
         
         connection.commit()
         print("Data inserted into PostgreSQL database successfully.")
