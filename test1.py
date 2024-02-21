@@ -8,10 +8,10 @@ import json
 ''' 
 Notes:
 - Created a reporsitory for this project on GitHub
-- Need to work on Query2 (line 18):
-    figure out how to pull specific information from monday.com
-- Need to confirgure the information being entered on PostgreSQL (line 45)
-    data is being inserted to the table on that line, make sure the right info is going in.
+- Need to work on Query2 (line 22):
+    understand the syntax of GraphQL to pull specific information from monday.com
+- Done confirguring the information being entered on PostgreSQL (line 45)
+    
 
 '''
 
@@ -45,7 +45,7 @@ def insert_data_into_postgresql(data):
         
         # Insert data into a 'projects' table
         for item in data:
-            # Extract specific values from item and assign them to variables
+            # Extract specific values from item and assign them to variables to be sent to SQL
             project_name = item.get('project_name')  
             project_name_full = item.get('project_name_full')  
             customer_name = item.get('customer_name')  
