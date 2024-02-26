@@ -18,7 +18,7 @@ def fetch_data_from_monday(api_key):
     headers = {'Authorization': api_key }
      # Query in GraphQL being passed to Monday.com to request data
     query2 = 'query { \
-        boards (ids: [1234567890, 9876543210]) { \
+        boards (ids: [4638100743]) { \
               id \
               name \
               columns { \
@@ -40,22 +40,22 @@ def fetch_data_from_monday(api_key):
 
 # Function to insert data into PostgreSQL database
 def print_out_data_from_monday(data):
-        """
-        # Insert data into a 'projects' table
-        for item in data:
-            # Extract specific values from item and assign them to variables to be sent to SQL
-            project_name = item.get('project_name')  
-            project_name_full = item.get('project_name_full')  
-            customer_name = item.get('customer_name')  
-            notes = item.get('notes')  
-            
-            # Print out the information
-            print("Project name: ", project_name)
-            print("Project full name: ", project_name_full)
-            print("Customer name: ", customer_name)
-            print("Notes: ", notes)
-        """
-        print(monday_data)
+        
+    boards = data.get('data', {}).get('boards', [])
+    for board in boards:
+        board_id = board.get('id')
+        board_name = board.get('name')
+        abbreviation = board_name[:4]
+        full_name = board_name[7:]
+        print(f"\nBoard: {abbreviation}\nBoard Name: {full_name}\nBoard ID: {board_id}")
+
+        columns = board.get('columns', [])
+        for column in columns:
+            column_id = column.get('id')
+            column_title = column.get('title')
+            column_type = column.get('type')
+            print(f"\tColumn ID: {column_id}, Title: {column_title}, Type: {column_type}")
+
         print("Data pulled from Monday.com successfully.")
         
     
