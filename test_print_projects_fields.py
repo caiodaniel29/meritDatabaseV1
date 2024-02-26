@@ -7,8 +7,13 @@ import json
 
 ''' 
 Notes:
-- Currently working on the part of pulling information from monday on this file
-    goal is to be able to print out that data and manipulate it.
+- Currently working on the part of pulling information from monday on this file     DONE 
+    goal is to be able to print out that data and manipulate it. 
+
+- Next goal 1: add the new fields that will be pulled from Monday.com, what brings the question:
+    What do we wanna see at the database? Talk to Lars about this. 
+
+-Next goal 2: How to automate to go through all the boards? Currently using RVS1 as example.
 
 '''
 
@@ -57,6 +62,7 @@ def print_out_data_from_monday(data):
         end_index = board_description.find(end_phrase)
         owner_name = board_description[start_index + len(start_phrase):end_index].strip()
 
+        # Printing the information pulled from Monday.com
         print(f"\nBoard: {abbreviation}\nBoard Name: {full_name}\nBoard ID: {board_id}\nOwner Name: {owner_name}\n")
 
         columns = board.get('columns', [])
