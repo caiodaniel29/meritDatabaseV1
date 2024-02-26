@@ -10,7 +10,7 @@ Notes:
 - Created a reporsitory for this project on GitHub
 - Need to work on Query2 (line 22):
     understand the syntax of GraphQL to pull specific information from monday.com
-- Done confirguring the information being entered on PostgreSQL (line 45)
+- Done confirguring the information being entered on PostgreSQL (line 55)
     
 
 '''
