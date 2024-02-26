@@ -21,6 +21,7 @@ def fetch_data_from_monday(api_key):
         boards (ids: [4638100743]) { \
               id \
               name \
+              description \
               columns { \
                  id \
                  title \
@@ -47,7 +48,16 @@ def print_out_data_from_monday(data):
         board_name = board.get('name')
         abbreviation = board_name[:4]
         full_name = board_name[7:]
-        print(f"\nBoard: {abbreviation}\nBoard Name: {full_name}\nBoard ID: {board_id}")
+        board_description = board.get('description')
+
+        # Slicing the Customer name from board description
+        start_phrase = "Owner: "
+        end_phrase = "Customer: "
+        start_index = board_description.find(start_phrase)
+        end_index = board_description.find(end_phrase)
+        owner_name = board_description[start_index + len(start_phrase):end_index].strip()
+
+        print(f"\nBoard: {abbreviation}\nBoard Name: {full_name}\nBoard ID: {board_id}\nOwner Name: {owner_name}\n")
 
         columns = board.get('columns', [])
         for column in columns:
