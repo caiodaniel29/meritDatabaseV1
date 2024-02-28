@@ -7,7 +7,7 @@ import json
 
 ''' 
 Notes:
-- Currently working on the part of pulling information from monday on this file     DONE 
+- Currently working on the part of pulling information from monday on this file                 DONE 
     goal is to be able to print out that data and manipulate it. 
 
 - Next goal 1: add the new fields that will be pulled from Monday.com, what brings the question:
@@ -65,14 +65,16 @@ def print_out_data_from_monday(data):
         # Printing the information pulled from Monday.com
         print(f"\nBoard: {abbreviation}\nBoard Name: {full_name}\nBoard ID: {board_id}\nOwner Name: {owner_name}\n")
 
+        '''
         columns = board.get('columns', [])
         for column in columns:
             column_id = column.get('id')
             column_title = column.get('title')
             column_type = column.get('type')
             print(f"\tColumn ID: {column_id}, Title: {column_title}, Type: {column_type}")
+        '''
 
-        print("Data pulled from Monday.com successfully.")
+        print("\nData pulled from Monday.com successfully.\n")
         
     
 
