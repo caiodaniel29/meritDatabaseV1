@@ -7,34 +7,34 @@ import json
 
 ''' 
 Notes:
-- Currently working on the part of pulling information from monday on this file                 DONE 
-    goal is to be able to print out that data and manipulate it. 
+- Currently working on the addition of all the boards to my program
+    trying the PM Workspace ID right now
 
-- Next goal 1: add the new fields that will be pulled from Monday.com, what brings the question:
-    What do we wanna see at the database? Talk to Lars about this. 
-
--Next goal 2: How to automate to go through all the boards? Currently using RVS1 as example.
+- Trying to make the program run with the workspace id
 
 '''
 
-# Function to fetch data from Monday.com's API
-def fetch_data_from_monday(api_key):
+
+    # Function to fetch data from Monday.com's API
+def fetch_data_from_monday(api_key, workspace_id):
+    global workspace_id  # Declare workspace_id as globalglobal workspace_id  # Declare workspace_id as global
     apiUrl = 'https://api.monday.com/v2/'
     headers = {'Authorization': api_key }
-     # Query in GraphQL being passed to Monday.com to request data
-    query2 = 'query { \
-        boards (ids: [4638100743]) { \
+    
+    # Query in GraphQL to request data for all boards within the workspace
+    query = f'query {{ \
+        boards (workspace_id: {workspace_id}) {{ \
               id \
               name \
               description \
-              columns { \
+              columns {{ \
                  id \
                  title \
                  type \
-                } \
-            }\
-    }'        
-    data = {'query' : query2}
+                }} \
+            }}\
+    }}'        
+    data = {'query' : query}
 
     response = requests.post(url=apiUrl, json=data, headers=headers)
     
@@ -44,36 +44,19 @@ def fetch_data_from_monday(api_key):
         print("Failed to retrieve data from Monday.com API. Status code:", response.status_code)
         return None
 
-# Function to insert data into PostgreSQL database
+# Function to print out data from Monday.com
 def print_out_data_from_monday(data):
-        
     boards = data.get('data', {}).get('boards', [])
     for board in boards:
         board_id = board.get('id')
         board_name = board.get('name')
-        abbreviation = board_name[:4]
-        full_name = board_name[7:]
-        board_description = board.get('description')
-
-        # Slicing the Customer name from board description
-        start_phrase = "Owner: "
-        end_phrase = "Customer: "
-        start_index = board_description.find(start_phrase)
-        end_index = board_description.find(end_phrase)
-        owner_name = board_description[start_index + len(start_phrase):end_index].strip()
-
-        # Printing the information pulled from Monday.com
-        print(f"\nBoard: {abbreviation}\nBoard Name: {full_name}\nBoard ID: {board_id}\nOwner Name: {owner_name}\n")
-
-        '''
-        columns = board.get('columns', [])
-        for column in columns:
-            column_id = column.get('id')
-            column_title = column.get('title')
-            column_type = column.get('type')
-            print(f"\tColumn ID: {column_id}, Title: {column_title}, Type: {column_type}")
-        '''
-
+        board_description = board.get('description', '')
+        
+        # Print board information
+        print(f"Board ID: {board_id}")
+        print(f"Board Name: {board_name}")
+        print(f"Board Description: {board_description}")
+        print("="*30)
         print("\nData pulled from Monday.com successfully.\n")
         
     
@@ -85,11 +68,15 @@ def main():
 
     # Retrieve data from Monday.com's API
     monday_data = fetch_data_from_monday(api_key)
-    
+
     if monday_data:
         # Print out the data pulled from Monday.com
         print_out_data_from_monday(monday_data)
 
 # Entry point of the script
 if __name__ == "__main__":
+
+    # My workspace ID 
+    workspace_id = '896741'
+
     main()
