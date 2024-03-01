@@ -7,33 +7,17 @@ import json
 
 ''' 
 Notes:
-- Currently working on the addition of all the boards to my program
-    trying the PM Workspace ID right now
-
-- Trying to make the program run with the workspace id
+- Currently able to print out some random boards.
 
 '''
 
-
-    # Function to fetch data from Monday.com's API
-def fetch_data_from_monday(api_key, workspace_id):
-    global workspace_id  # Declare workspace_id as globalglobal workspace_id  # Declare workspace_id as global
+# Function to fetch data from Monday.com's API
+def fetch_data_from_monday(api_key):
     apiUrl = 'https://api.monday.com/v2/'
     headers = {'Authorization': api_key }
     
     # Query in GraphQL to request data for all boards within the workspace
-    query = f'query {{ \
-        boards (workspace_id: {workspace_id}) {{ \
-              id \
-              name \
-              description \
-              columns {{ \
-                 id \
-                 title \
-                 type \
-                }} \
-            }}\
-    }}'        
+    query = '{ boards {name id} }'        
     data = {'query' : query}
 
     response = requests.post(url=apiUrl, json=data, headers=headers)
@@ -47,19 +31,15 @@ def fetch_data_from_monday(api_key, workspace_id):
 # Function to print out data from Monday.com
 def print_out_data_from_monday(data):
     boards = data.get('data', {}).get('boards', [])
-    for board in boards:
-        board_id = board.get('id')
-        board_name = board.get('name')
-        board_description = board.get('description', '')
-        
-        # Print board information
-        print(f"Board ID: {board_id}")
-        print(f"Board Name: {board_name}")
-        print(f"Board Description: {board_description}")
-        print("="*30)
-        print("\nData pulled from Monday.com successfully.\n")
-        
     
+    for board in boards:
+        board_name = board.get('name')
+        board_id = board.get('id')
+        print(f"Board Name: {board_name}, and the Board ID: {board_id}")
+        print("-" * 20)
+            
+    
+    print("\nData pulled from Monday.com successfully.\n")
 
 # Main function
 def main():
@@ -75,8 +55,5 @@ def main():
 
 # Entry point of the script
 if __name__ == "__main__":
-
-    # My workspace ID 
-    workspace_id = '896741'
-
     main()
+
