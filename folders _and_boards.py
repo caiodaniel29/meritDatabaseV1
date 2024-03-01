@@ -7,7 +7,11 @@ import json
 
 ''' 
 Notes:
-- This program prints out the name of the folder and the id of each PM
+- This program prints out all the folders located in a specific workspace that is hard-coded in the query.
+    It will also print all the boards located in that folder. 
+
+- Next Goal: add this code to the main file "monday_integration" so we can print out the basic information of all the
+    projects located in the Project Management workspace, and start filtering it.
 
 '''
 
@@ -45,14 +49,14 @@ def print_out_data_from_monday(data):
     for folder in folders:
         folder_name = folder.get('name')
         folder_id = folder.get('id')
-        print(f"Folder Name: {folder_name}, and the Folder ID: {folder_id}")
-        print("Children:")
+        print(f"\nFolder Name: {folder_name}  ||  Folder ID: {folder_id}")
+        print("Projects:")
         children = folder.get('children', [])
         for child in children:
             child_id = child.get('id')
             child_name = child.get('name')
-            print(f"\tChild Name: {child_name}, and the Child ID: {child_id}")
-        print("-" * 20)
+            print(f"\t{child_name}   ID: {child_id}")
+        print("-" * 50)
     
     print("\nData pulled from Monday.com successfully.\n")
 
