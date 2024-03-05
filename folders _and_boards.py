@@ -56,7 +56,7 @@ def print_out_data_from_monday(data):
             child_id = child.get('id')
             child_name = child.get('name')
             print(f"\t{child_name}   ID: {child_id}")
-        print("-" * 50)
+        print("=" * 70)
     
     print("\nData pulled from Monday.com successfully.\n")
 
