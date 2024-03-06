@@ -8,12 +8,14 @@ import json
 ''' 
 Notes:
 
-- Currently working on the addition of the two file folders_and_boards and monday_integration
-    I have to make sure that the board`s id are being pulled goes into monday_integration function
-    and prints out the information of each board. What data structure to use?        
+- Integration from two file is DONE.
+
+- Next Goal 1: Is to dont let the program crash at the end, after the last board
+
+- Next Goal 2: Filter the boards to only get projects.
 
 '''
-
+index2 = 0
 
 # Function to fetch the board`s name and ID from Monday.com's API
 def fetch_boardsID_from_monday(api_key):
@@ -86,6 +88,7 @@ def fetch_data_from_monday(api_key, boards_IDs):
 # Function to print out the data for a specific board
 def print_out_data_from_monday(data):
     boards = data.get('data', {}).get('boards', [])
+    global index2
 
     for board in boards:
         board_id = board.get('id')
@@ -93,51 +96,22 @@ def print_out_data_from_monday(data):
         abbreviation = board_name[:4]
         full_name = board_name[7:]
         board_description = board.get('description')
+        index2 += 1
 
         # Slicing the Customer name from board description
-        start_phrase = "Owner: "
-        end_phrase = "Customer: "
-        start_index = board_description.find(start_phrase)
-        end_index = board_description.find(end_phrase)
-        owner_name = board_description[start_index + len(start_phrase):end_index].strip()
-
-        # Printing the information pulled from Monday.com
-        print(f"\nBoard: {abbreviation}\nBoard Name: {full_name}\nBoard ID: {board_id}\nOwner Name: {owner_name}\n")
-
-# Function to print out the data that would go into PostgreSQL database
-def print_out_dataq_from_monday(data):
-      '''  
-    boards = data.get('data', {}).get('boards', [])
-    for board in boards:
-        board_id = board.get('id')
-        board_name = board.get('name')
-        abbreviation = board_name[:4]
-        full_name = board_name[7:]
-        board_description = board.get('description')
-
-        # Slicing the Customer name from board description
-        start_phrase = "Owner: "
-        end_phrase = "Customer: "
-        start_index = board_description.find(start_phrase)
-        end_index = board_description.find(end_phrase)
-        owner_name = board_description[start_index + len(start_phrase):end_index].strip()
-
-        # Printing the information pulled from Monday.com
-        print(f"\nBoard: {abbreviation}\nBoard Name: {full_name}\nBoard ID: {board_id}\nOwner Name: {owner_name}\n")
+        if board_description:
+            start_phrase = "Owner: "
+            end_phrase = "Customer: "
+            start_index = board_description.find(start_phrase)
+            end_index = board_description.find(end_phrase)
+            owner_name = board_description[start_index + len(start_phrase):end_index].strip()
+            print(f"\nBoard: {abbreviation}\nBoard Name: {full_name}\nBoard ID: {board_id}\nOwner Name: {owner_name}\nProject Number: {index2}\n")
+        
+        else:
+            board_description = "No description for this one."
+            print(f"\nBoard: {abbreviation}\nBoard Name: {full_name}\nBoard Description: {board_description}\nProject Number: {index2}\n")
 
         
-        columns = board.get('columns', [])
-        for column in columns:
-            column_id = column.get('id')
-            column_title = column.get('title')
-            column_type = column.get('type')
-            print(f"\tColumn ID: {column_id}, Title: {column_title}, Type: {column_type}")
-        
-
-        print("\nData pulled from Monday.com successfully.\n")
-        '''
-        
-    
 
 # Main function
 def main():
