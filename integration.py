@@ -109,12 +109,13 @@ def print_out_data_from_monday(data):
             start_index = board_description.find(start_phrase)
             end_index = board_description.find(end_phrase)
             owner_name = board_description[start_index + len(start_phrase):end_index].strip()
-                
-            if end_index:
+
+            # Check the description (if it has "Customer:" after "Owner:")    
+            if end_index != -1:
                 print(f"\nBoard: {abbreviation}\nBoard Name: {full_name}\nProject Number: {index2}\nBoard ID: {board_id}\nOwner Name: {owner_name}\n")
         
             else:
-                board_description = "No description for this one."
+                board_description = "Description not uniform"
                 print(f"\nBoard: {abbreviation}\nBoard Name: {full_name}\nBoard Description: {board_description}\nProject Number: {index2}\n")
 
         
