@@ -10,7 +10,7 @@ Notes:
 
 - Integration from two file is DONE.
 
-- Next Goal 1: Is to dont let the program crash at the end, after the last board.
+- Next Goal 1: Is to dont let the program crash at the end, after the last board.  DONE
 
 - Next Goal 2: Filter the boards to only get projects.   DONE
 
@@ -122,7 +122,7 @@ def print_out_data_from_monday(data):
 
 # Main function.
 def main():
-    # Your Monday.com API key.
+    # Your Monday.com API key.  
     api_key = 'eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjMxNTI1MjYyNiwiYWFpIjoxMSwidWlkIjo0NDc2ODk2MiwiaWFkIjoiMjAyNC0wMS0yOVQxNTo0NDoyMS4wMDBaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6OTY4Mzg5MCwicmduIjoidXNlMSJ9.-jN2Xic1xNY9kVlr8XRYFTfy2gOLaVu9Gwp5LLfTCLk'
 
     # Retrieve the boards` ID from Monday.com's API.
@@ -134,8 +134,6 @@ def main():
 
         # Pull boards information with the IDs and print out.
         data = fetch_data_from_monday(api_key, boards_IDs)
-
-        print_out_data_from_monday(data)
 
 # Entry point of the script.
 if __name__ == "__main__":
