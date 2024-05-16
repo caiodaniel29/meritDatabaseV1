@@ -123,7 +123,7 @@ def print_out_data_from_monday(data):
 # Main function.
 def main():
     # Your Monday.com API key.  
-    api_key = 'eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjMxNTI1MjYyNiwiYWFpIjoxMSwidWlkIjo0NDc2ODk2MiwiaWFkIjoiMjAyNC0wMS0yOVQxNTo0NDoyMS4wMDBaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6OTY4Mzg5MCwicmduIjoidXNlMSJ9.-jN2Xic1xNY9kVlr8XRYFTfy2gOLaVu9Gwp5LLfTCLk'
+    api_key = 'your Monday.com key'
 
     # Retrieve the boards` ID from Monday.com's API.
     monday_data = fetch_boardsID_from_monday(api_key)
