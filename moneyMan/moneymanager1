@@ -1,0 +1,98 @@
+import datetime  # Import the datetime module to handle dates
+
+# Function to convert a string input to a date format
+# The date is expected in the format MM/DD/YYYY
+def parse_date(date_str):
+    try:
+        # Try to convert the string into a date object
+        return datetime.datetime.strptime(date_str, "%m/%d/%Y")
+    except ValueError:
+        # If the string is in the wrong format, print an error message
+        print("Invalid date format. Please use MM/DD/YYYY.")
+        return None  # Return None if the date is invalid
+
+# Function to add an expense entry
+def add_expense(expenses):
+    # Ask the user to input the date, category, and amount for the expense
+    date_str = input("Enter the date (MM/DD/YYYY): ")
+    date = parse_date(date_str)  # Parse the date string into a date object
+    if date:
+        # If the date is valid, ask for category and amount
+        category = input("Enter the category (e.g., groceries, entertainment, etc.): ")
+        amount = float(input("Enter the amount spent: "))  # Convert the input to a float
+        # Add the expense to the list of expenses
+        expenses.append({"date": date, "category": category, "amount": amount})
+        print("Expense added successfully!")  # Confirm that the expense was added
+
+# Function to display a summary of expenses (called "Resumo")
+def resumo(expenses, days=30):
+    if not expenses:
+        # If there are no expenses in the list, inform the user
+        print("No expenses recorded.")
+        return
+    
+    # Calculate the cutoff date for filtering expenses (e.g., the last 30 days)
+    cutoff_date = datetime.datetime.now() - datetime.timedelta(days=days)
+    
+    # Filter the expenses to include only those within the last 'days' days
+    filtered_expenses = [exp for exp in expenses if exp['date'] >= cutoff_date]
+    
+    if not filtered_expenses:
+        # If no expenses fall within the last 'days', inform the user
+        print(f"No expenses recorded in the last {days} days.")
+        return
+
+    # Calculate the total amount spent in the filtered period
+    total_spent = sum(exp['amount'] for exp in filtered_expenses)
+
+    # Create a dictionary to store the total amount spent per category
+    categories = {}
+
+    # Loop through the filtered expenses
+    for exp in filtered_expenses:
+        category = exp['category']  # Get the category for this expense
+        # Add the amount spent in this category to the total in the categories dictionary
+        categories[category] = categories.get(category, 0) + exp['amount']
+
+    # Print the summary of spending for the last 'days'
+    print(f"Summary of spending for the last {days} days:")
+    
+    # Loop through each category and calculate the percentage of the total
+    for category, amount in categories.items():
+        percentage = (amount / total_spent) * 100  # Calculate percentage of total
+        print(f"{category}: ${amount:.2f} ({percentage:.2f}%)")  # Print the category summary
+
+    # Print the total amount spent
+    print(f"Total spent: ${total_spent:.2f}")
+
+# Main function to provide a simple text-based menu
+def main():
+    expenses = []  # Initialize an empty list to store expenses
+
+    while True:
+        # Display the menu options to the user
+        print("\nExpense Tracker Menu:")
+        print("1. Add new daily expense")
+        print("2. Check last 30 days' spending")
+        print("3. Exit")
+
+        # Ask the user for their choice
+        choice = input("Enter your choice (1/2/3): ")
+
+        if choice == "1":
+            # Option 1: Add a new daily expense
+            add_expense(expenses)
+        elif choice == "2":
+            # Option 2: Show a summary of expenses for the last 30 days
+            resumo(expenses)
+        elif choice == "3":
+            # Option 3: Exit the program
+            print("Goodbye!")
+            break
+        else:
+            # If the input is invalid, prompt the user to try again
+            print("Invalid choice. Please try again.")
+
+# Check if the script is being run directly
+if __name__ == "__main__":
+    main()  # Call the main function to start the program
